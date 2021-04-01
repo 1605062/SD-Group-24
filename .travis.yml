@@ -1,20 +1,24 @@
 language: python
-# python versions
 python:
-- "3.4"
-- "2.7.4"
+  - "2.7"
+  - "3.4"
+  - "3.5"
+  - "3.6"      # current default Python on Travis CI
+  - "3.7"
+  - "3.8"
+  - "3.9"
+  - "3.9-dev"  # 3.9 development branch
+  - "nightly"  # nightly build
 env:
--DJANGO=1.8 DB=sqlite3
-# install requirements
+  -DJANGO=1.8 DB=sqlite3
+
+ # command to install dependencies
 install:
-- pip install -r
-requirements.txt
-- pip install coveralls
-# To run tests
+  - pip install -r requirements.txt
+  - pip install coveralls
+ # command to run tests
 script:
-- coverage run --
-source=my_app1, my_app2
-manage.py test
-#Send coverage report to coveralls
+  - pytest
+  - coverage run -- mysource=myapp_1, myapp_2 manage.py test
 after_success:
-coveralls
+  coveralls
