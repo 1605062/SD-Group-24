@@ -4,10 +4,9 @@ os:
 - osx
 - windows
 python:
-  - "2.7.4"
-  - "3.6"
+  - "3.6.8"
 env:
-  -DJANGO=3.2 DB=sqlite3
+  -DJANGO=3.2 DB=mysql
 
  # command to install dependencies
 install:
@@ -16,6 +15,6 @@ install:
  # command to run tests
 script:
   - pytest
-  - coverage run -- mysource=SD-Group-24-main, ecommerce manage.py test
+  - coverage run manage.py test
 after_success:
   coveralls
