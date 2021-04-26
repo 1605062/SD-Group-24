@@ -4,7 +4,7 @@ os:
 - osx
 - windows
 python:
-  - "3.6.8"
+  - "3.9.4"
 env:
   -DJANGO=3.2 DB=mysql
 
