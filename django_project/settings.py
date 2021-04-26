@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-3f*v1r=bl#ufa_c-k7v*$3u@914v055^9!!@sk#93l=iiadpi(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['148.100.79.67']
+ALLOWED_HOSTS = ['148.100.79.67','127.0.0.1']
 
 
 # Application definition
@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     # 3rd party tools
     'recommends',
     'recommends.storages.djangoorm',
+    'user_visit',
+    'django_user_agents',
 
     # App
     'ecommerce.apps.EcommerceConfig',
@@ -59,6 +61,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #user visit middleware
+    'user_visit.middleware.UserVisitMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'django_project.urls'
@@ -88,11 +93,11 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'main_schema',
+        'NAME': 'sec_schema',
         'USER': 'dbadmin',
         'PASSWORD': 'admin12345',
-        'HOST': '',
-        'PORT': '',
+        'HOST': '148.100.79.67',
+        'PORT': '3306',
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
         }
@@ -138,6 +143,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
+)
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
@@ -150,3 +158,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/ecommerce')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '148.100.79.67:3306',
+    }
+}
